@@ -1,1 +1,1 @@
-iwr https://raw.githubusercontent.com/M-d3bug/QuickWin/main/QuickWin.bat -o $env:TEMP\q.bat; saps $env:TEMP\QuickWin.bat -v RunAs
+iwr https://raw.githubusercontent.com/M-d3bug/QuickWin/main/QuickWin.cmd -o $env:TEMP\QuickWin.cmd; saps $env:TEMP\QuickWin.bat -v RunAs
