@@ -5,15 +5,13 @@ The Clean Windows Toolkit
  Zero Bloat. Zero Dependencies.
  A powerful, open-source automation toolkit designed to debloat, optimize, and set up Windows 10/11 environments with a single command.
 </p>
-⚡ Quick Install
+
+⚡ **Quick Install**
 
 Run the following command in PowerShell (Administrator):
 
 
- 
-
     irm https://M-d3bug.github.io/QuickWin/install.ps1 | iex
-
      
 
 ## 🚀 **Why QuickWin?**
@@ -49,13 +47,13 @@ Core Features
 
 ## 🛠️ **Usage** 
 
-   Run the Powershell command above, or Download and Run QuickWin.cmd as Administrator.  
-    Select an option from the menu:
-         Install WingetUI: Sets up the package manager if missing.
-         Install Essential Apps: Deploys your core software suite.
-         Apply Safe Tweaks: Optimizes UI, Privacy, and Services.
-         External Utility Hub: Run Massgrave, Winscript, or custom scripts.
-         Run Complete Setup: Executes steps 1-3 automatically.
+   - Run the Powershell command above, or Download and Run QuickWin.cmd as Administrator.  
+   - Select an option from the menu:
+     - Install WingetUI: Sets up the package manager if missing.
+     - Install Essential Apps: Deploys your core software suite.
+     - Apply Safe Tweaks: Optimizes UI, Privacy, and Services.
+     - External Utility Hub: Run Massgrave, Winscript, or custom scripts.
+     - Run Complete Setup: Executes steps 1-3 automatically.
           
 
 ## ⚠️ **System Requirements** 
