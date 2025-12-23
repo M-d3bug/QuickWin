@@ -1,10 +1,4 @@
 # QuickWin
-<p align="center">
-The Clean Windows Toolkit
- <p align="center">
- Zero Bloat. Zero Dependencies.
- A powerful, open-source automation toolkit designed to debloat, optimize, and set up Windows 10/11 environments with a single command.
-</p>
 
 ⚡ **Quick Install**
 
