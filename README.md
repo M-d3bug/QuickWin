@@ -25,33 +25,33 @@ Core Features
 
      
 
-    🛡️ LTSC Ready
+ 🛡️ LTSC Ready
     Automatically detects if winget is missing. If absent, it deploys a portable package manager (UniGetUI) so you never miss out on essential software tools. 
      
 
-    🧹 Bloatware Removal
+ 🧹 Bloatware Removal
     Securely removes pre-installed third-party apps (Candy Crush, Twitter, etc.) and unnecessary telemetry services. 
      
 
-    ⚙️ Privacy & Performance
+ ⚙️ Privacy & Performance
     Hardens system privacy by disabling advertising ID, location tracking, and diagnostic data reporting. Includes UI tweaks like restoring the old Photo Viewer and enabling "End Task" on the taskbar. 
      
 
-    📦 Essential Apps
+ 📦 Essential Apps
     Automatically installs core software like 7-Zip, Brave, Notepad++, VLC, and qView silently via Winget. 
      
 
-    🔌 External Utility Hub
+ 🔌 External Utility Hub
     Seamlessly execute external community tools like Massgrave or Winscript. Supports running custom registry keys and advanced PowerShell commands directly from the menu. 
      
 
-    ↩️ Revert Functionality
+ ↩️ Revert Functionality
     Made a mistake? The Revert function safely restores default Windows settings and services, ensuring you are always in control. 
      
 
 🛠️ Usage 
 
-    Run the Powershell command above, or Download and Run QuickWin.cmd as Administrator.  
+   Run the Powershell command above, or Download and Run QuickWin.cmd as Administrator.  
     Select an option from the menu:
          Install WingetUI: Sets up the package manager if missing.
          Install Essential Apps: Deploys your core software suite.
@@ -62,8 +62,8 @@ Core Features
 
 ⚠️ System Requirements 
 
-     OS: Windows 10 / 11 (Pro, Home, Enterprise, or LTSC)
-     Privileges: Administrator access is required to modify registry keys and system services.
+   OS: Windows 10 / 11 (Pro, Home, Enterprise, or LTSC)
+   Privileges: Administrator access is required to modify registry keys and system services.
 
     
 
@@ -73,21 +73,21 @@ QuickWin is an automation wrapper script. All rights to the individual applicati
 
 External Tools Integrated: 
 
-     UniGetUI  by marticliment - Used for package management compatibility on LTSC systems.
-     Chris Titus Utility  by Chris Titus - Leveraged for advanced Windows system utilities.     
+   UniGetUI  by marticliment - Used for package management compatibility on LTSC systems.
+   Chris Titus Utility  by Chris Titus - Leveraged for advanced Windows system utilities.     
 
 Software Distributed via Winget: 
 
-     7-Zip  by Igor Pavlov
-     Notepad++  by Don Ho
-     VLC media player  by the VideoLAN organization
-     qView  by jurplel
-     Brave Browser  by Brave Software, Inc.
+  - 7-Zip  by Igor Pavlov
+  - Notepad++  by Don Ho
+  - VLC media player  by the VideoLAN organization
+  - qView  by jurplel
+  - Brave Browser  by Brave Software, Inc.
      
 
-    Disclaimer: This script is provided as-is for educational and automation purposes. We do not host, redistribute, or claim ownership of any external software or scripts mentioned above. 
+Disclaimer: This script is provided as-is for educational and automation purposes. We do not host, redistribute, or claim ownership of any external software or scripts mentioned above. 
           
 
-    <i>Made with ❤️ for a cleaner Windows experience.</i>
+<i>Made with ❤️ for a cleaner Windows experience.</i>
 </div>
 ```
