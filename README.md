@@ -1,12 +1,10 @@
 # QuickWin
-
-
-Windows
+<p align="center">
 The Clean Windows Toolkit
-
-Zero Bloat. Zero Dependencies.
-
-A powerful, open-source automation toolkit designed to debloat, optimize, and set up Windows 10/11 environments with a single command.
+ <p align="center">
+ Zero Bloat. Zero Dependencies.
+ A powerful, open-source automation toolkit designed to debloat, optimize, and set up Windows 10/11 environments with a single command.
+</p>
 ⚡ Quick Install
 
 Run the following command in PowerShell (Administrator):
@@ -18,7 +16,7 @@ Run the following command in PowerShell (Administrator):
 
      
 
-🚀 **Why QuickWin?**
+## 🚀 **Why QuickWin?**
 
 QuickWin is the perfect utility for fresh Windows 10/11 installations, specifically tailored for LTSC and Enterprise editions that often lack modern tools out of the box. It is designed to be non-invasive, applying safe optimizations and tweaks that enhance performance without compromising system stability. 
 Core Features 
@@ -49,7 +47,7 @@ Core Features
     Made a mistake? The Revert function safely restores default Windows settings and services, ensuring you are always in control. 
      
 
-🛠️ **Usage** 
+## 🛠️ **Usage** 
 
    Run the Powershell command above, or Download and Run QuickWin.cmd as Administrator.  
     Select an option from the menu:
@@ -60,14 +58,14 @@ Core Features
          Run Complete Setup: Executes steps 1-3 automatically.
           
 
-⚠️ **System Requirements** 
+## ⚠️ **System Requirements** 
 
    OS: Windows 10 / 11 (Pro, Home, Enterprise, or LTSC)
    Privileges: Administrator access is required to modify registry keys and system services.
 
     
 
-🙏 **Credits & Attributions** 
+## 🙏 **Credits & Attributions** 
 
 QuickWin is an automation wrapper script. All rights to the individual applications, utilities, and external scripts invoked by this tool belong to their respective authors and creators. 
 
