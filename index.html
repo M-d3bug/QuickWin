@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickWin | Clean Windows ToolKit</title>
+    <meta name="description" content="The ultimate open-source Windows automation toolkit for debloating, optimizing, and setting up your PC. Perfect for Windows LTSC.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Inter for UI, Fira Code for Terminal -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Config for Custom Colors/Fonts -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#121212',
+                            700: '#1e1e1e',
+                            600: '#2d2d2d',
+                        },
+                        accent: {
+                            DEFAULT: '#3b82f6', // Blue-500
+                            hover: '#2563eb',   // Blue-600
+                            glow: 'rgba(59, 130, 246, 0.5)'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Glassmorphism utility */
+        .glass {
+            background: rgba(30, 30, 30, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Terminal Cursor Animation */
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-dark-900 text-slate-300 font-sans antialiased selection:bg-accent selection:text-white overflow-x-hidden">
+
+    <!-- Background Ambient Glow -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-accent/10 rounded-full blur-[100px] animate-pulse-slow"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-purple-900/10 rounded-full blur-[100px] animate-pulse-slow" style="animation-delay: 1.5s;"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass border-b border-white/5 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-2 group cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <i class="fa-solid fa-terminal text-accent text-xl group-hover:rotate-12 transition-transform"></i>
+                    <span class="font-bold text-white text-lg tracking-wide">QuickWin</span>
+                </div>
+                
+                <!-- Links -->
+                <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <!-- Features and Technical links removed -->
+                    <a href="https://github.com/yourusername/QuickWin" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 text-white transition-all border border-white/10">
+                        <i class="fa-brands fa-github"></i>
+                        <span>Star on GitHub</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-dark-800 border-b border-white/5">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <!-- Features and Technical links removed -->
+                <a href="https://github.com/yourusername/QuickWin" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-white/5">GitHub Repository</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-semibold tracking-wide uppercase mb-6">
+                <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                LTSC Ready
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-bold text-white tracking-tight mb-6">
+                Clean Windows.<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Zero Dependencies.</span>
+            </h1>
+            
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-slate-400 mb-10">
+                The perfect toolkit for Windows 10/11 <span class="text-white font-semibold">LTSC</span> editions. 
+                Automatically deploys package management where missing, debloats, and optimizes your system.
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="#install" class="px-8 py-3 rounded-lg bg-accent hover:bg-accent-hover text-white font-semibold transition-all shadow-lg shadow-accent/20 flex items-center gap-2 group">
+                    <i class="fa-solid fa-download group-hover:animate-bounce"></i>
+                    Get Started
+                </a>
+                <a href="https://github.com/yourusername/QuickWin" target="_blank" class="px-8 py-3 rounded-lg bg-dark-700 hover:bg-dark-600 text-white font-semibold border border-dark-600 transition-all flex items-center gap-2">
+                    <i class="fa-brands fa-github"></i>
+                    View Source
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PowerShell Execution Section -->
+    <section id="install" class="py-16 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-white mb-2">One-Step Installation</h2>
+                <p class="text-slate-400">Copy and paste this command into your PowerShell (Admin)</p>
+            </div>
+
+            <!-- Terminal Component -->
+            <div class="glass rounded-xl overflow-hidden shadow-2xl animate-float border border-white/10">
+                <!-- Terminal Header -->
+                <div class="bg-dark-800 px-4 py-3 flex items-center justify-between border-b border-white/5">
+                    <div class="flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    </div>
+                    <div class="text-xs text-slate-500 font-mono">PowerShell - Administrator</div>
+                    <div class="w-16"></div> <!-- Spacer for balance -->
+                </div>
+                
+                <!-- Terminal Body -->
+                <div class="bg-dark-900/90 p-6 font-mono text-sm md:text-base relative group">
+                    <div class="flex items-start">
+                        <span class="text-blue-400 mr-2 select-none">PS C:\></span>
+                        <span id="command-text" class="text-slate-300 break-all">irm irm https://M-d3bug.github.io/QuickWin/install.ps1 | iex</span>
+                        <span class="w-2.5 h-5 bg-slate-400 ml-1 cursor-blink"></span>
+                    </div>
+
+                    <!-- Copy Button -->
+                    <button onclick="copyToClipboard()" id="copy-btn" class="absolute top-4 right-4 flex items-center gap-2 px-3 py-1.5 rounded bg-dark-700 border border-white/10 hover:bg-dark-600 text-xs text-slate-300 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100">
+                        <i class="fa-regular fa-copy"></i>
+                        <span>Copy</span>
+                    </button>
+                    
+                    <!-- Toast Notification -->
+                    <div id="copy-feedback" class="absolute top-4 right-4 px-3 py-1.5 rounded bg-emerald-500/90 text-white text-xs font-semibold shadow-lg transform transition-all duration-300 translate-y-[-10px] opacity-0 pointer-events-none">
+                        <i class="fa-solid fa-check mr-1"></i> Copied!
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-center mt-6 text-xs text-slate-500">
+                <i class="fa-solid fa-triangle-exclamation text-yellow-500 mr-1"></i>
+                Ensure you are running PowerShell as Administrator for the script to execute correctly.
+            </p>
+        </div>
+    </section>
+
+    <!-- Functionality Grid -->
+    <section id="features" class="py-24 bg-dark-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white">System Capabilities</h2>
+                <p class="mt-4 text-slate-400 max-w-2xl mx-auto">
+                    Everything you need to transform a fresh Windows install or a stripped-down LTSC edition into a productivity machine.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1: Complete Setup -->
+                <div class="group p-6 rounded-xl bg-dark-700 border border-white/5 hover:border-accent/50 transition-all duration-300 hover:transform hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-colors">
+                        <i class="fa-solid fa-rocket text-blue-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Complete Automation</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Run "Complete Setup" to automatically install package managers, essential apps, and apply optimizations in a single sequence.
+                    </p>
+                </div>
+
+                <!-- Card 2: Debloat -->
+                <div class="group p-6 rounded-xl bg-dark-700 border border-white/5 hover:border-red-500/50 transition-all duration-300 hover:transform hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-lg bg-red-500/10 flex items-center justify-center mb-4 group-hover:bg-red-500/20 transition-colors">
+                        <i class="fa-solid fa-trash-can text-red-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Bloatware Removal</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Removes pre-installed third-party apps (Candy Crush, Twitter, etc.) and disables telemetry services securely.
+                    </p>
+                </div>
+
+                <!-- Card 3: Privacy -->
+                <div class="group p-6 rounded-xl bg-dark-700 border border-white/5 hover:border-emerald-500/50 transition-all duration-300 hover:transform hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:bg-emerald-500/20 transition-colors">
+                        <i class="fa-solid fa-user-shield text-emerald-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Privacy Hardening</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Modifies registry keys to disable advertising ID, location tracking, and diagnostic data reporting.
+                    </p>
+                </div>
+
+                <!-- Card 4: App Installer -->
+                <div class="group p-6 rounded-xl bg-dark-700 border border-white/5 hover:border-purple-500/50 transition-all duration-300 hover:transform hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4 group-hover:bg-purple-500/20 transition-colors">
+                        <i class="fa-solid fa-box-open text-purple-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Essential Apps</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Installs core software like 7-Zip, Brave Browser, Notepad++, VLC, and qView via Winget silently.
+                    </p>
+                </div>
+
+                <!-- Card 5: External Utility Hub (Replaced UI & Performance) -->
+                <div class="group p-6 rounded-xl bg-dark-700 border border-white/5 hover:border-indigo-500/50 transition-all duration-300 hover:transform hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-lg bg-indigo-500/10 flex items-center justify-center mb-4 group-hover:bg-indigo-500/20 transition-colors">
+                        <i class="fa-solid fa-terminal text-indigo-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">External Utility Hub</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Seamlessly execute external community tools like <b>Massgrave</b> or <b>Winscript</b>. Also supports running custom registry keys and advanced commands.
+                    </p>
+                </div>
+
+                <!-- Card 6: Safety -->
+                <div class="group p-6 rounded-xl bg-dark-700 border border-white/5 hover:border-cyan-500/50 transition-all duration-300 hover:transform hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-4 group-hover:bg-cyan-500/20 transition-colors">
+                        <i class="fa-solid fa-rotate-left text-cyan-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Revert Functionality</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Made a mistake? The Revert function safely restores default Windows settings and services.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Overview -->
+    <section id="technical" class="py-24 border-t border-white/5">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            
+            <h2 class="text-3xl font-bold text-white mb-6">Built for LTSC & Enterprise</h2>
+            
+            <!-- LTSC Highlight Box -->
+            <div class="mb-10 p-6 rounded-xl bg-blue-900/10 border border-blue-500/20 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10">
+                    <i class="fa-brands fa-windows text-9xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-blue-400 mb-3 relative z-10">No Winget? No Problem.</h3>
+                <p class="text-slate-300 text-sm md:text-base leading-relaxed relative z-10">
+                    Windows LTSC editions are optimized for stability but often lack the modern <strong>Windows Package Manager (Winget)</strong> and the Microsoft Store. 
+                    QuickWin intelligently detects if Winget is missing. If it is, the script automatically downloads and installs <strong>UniGetUI</strong> with bundled dependencies, 
+                    ensuring you never miss out on essential software management tools on your LTSC system.
+                </p>
+            </div>
+
+            <p class="text-slate-400 mb-8 leading-relaxed">
+                QuickWin is a self-contained Batch script that acts as a wrapper for advanced Windows maintenance tools. 
+                It utilizes standard Windows utilities and PowerShell to perform deep system changes without requiring complex user input.
+            </p>
+
+            <ul class="text-left space-y-6 max-w-2xl mx-auto">
+                <li class="flex items-start">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center mt-0.5">
+                        <i class="fa-solid fa-shield-halved text-accent text-xs"></i>
+                    </div>
+                    <div class="ml-4">
+                        <strong class="text-white block font-medium">Admin Privileges Required</strong>
+                        <span class="text-sm text-slate-500">Necessary for Registry editing, Service configuration, and Appx removal.</span>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center mt-0.5">
+                        <i class="fa-solid fa-box text-accent text-xs"></i>
+                    </div>
+                    <div class="ml-4">
+                        <strong class="text-white block font-medium">Universal Package Manager</strong>
+                        <span class="text-sm text-slate-500">Automatically detects system Winget or bundles a portable version via UniGetUI for LTSC compatibility.</span>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center mt-0.5">
+                        <i class="fa-solid fa-microchip text-accent text-xs"></i>
+                    </div>
+                    <div class="ml-4">
+                        <strong class="text-white block font-medium">Deep System Integration</strong>
+                        <span class="text-sm text-slate-500">Directly modifies HKCU/HKLM hives and configures service startup states for optimal performance.</span>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 border-t border-white/5 pt-12 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+            
+            <div class="flex items-center gap-2 mb-6">
+                <i class="fa-solid fa-terminal text-slate-500"></i>
+                <span class="font-bold text-slate-300">QuickWin</span>
+            </div>
+
+            <p class="text-slate-600 text-sm text-center">
+                &copy; 2025 QuickWin Project. Open Source under MIT License.<br>
+                Windows is a trademark of Microsoft Corporation.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Copy Functionality and Mobile Menu -->
+    <script>
+        // Copy to Clipboard Logic
+        function copyToClipboard() {
+            const commandText = document.getElementById('command-text').innerText;
+            const copyBtn = document.getElementById('copy-btn');
+            const feedback = document.getElementById('copy-feedback');
+
+            navigator.clipboard.writeText(commandText).then(() => {
+                // Show Feedback
+                feedback.classList.remove('translate-y-[-10px]', 'opacity-0');
+                feedback.classList.add('translate-y-0', 'opacity-100');
+                
+                // Hide Copy Button temporarily
+                copyBtn.classList.add('opacity-0');
+
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    feedback.classList.remove('translate-y-0', 'opacity-100');
+                    feedback.classList.add('translate-y-[-10px]', 'opacity-0');
+                    copyBtn.classList.remove('opacity-0');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
