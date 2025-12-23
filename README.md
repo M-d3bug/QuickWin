@@ -18,7 +18,7 @@ Run the following command in PowerShell (Administrator):
 
      
 
-🚀 Why QuickWin? 
+🚀 **Why QuickWin?**
 
 QuickWin is the perfect utility for fresh Windows 10/11 installations, specifically tailored for LTSC and Enterprise editions that often lack modern tools out of the box. It is designed to be non-invasive, applying safe optimizations and tweaks that enhance performance without compromising system stability. 
 Core Features 
@@ -49,7 +49,7 @@ Core Features
     Made a mistake? The Revert function safely restores default Windows settings and services, ensuring you are always in control. 
      
 
-🛠️ Usage 
+🛠️ **Usage** 
 
    Run the Powershell command above, or Download and Run QuickWin.cmd as Administrator.  
     Select an option from the menu:
@@ -60,32 +60,32 @@ Core Features
          Run Complete Setup: Executes steps 1-3 automatically.
           
 
-⚠️ System Requirements 
+⚠️ **System Requirements** 
 
    OS: Windows 10 / 11 (Pro, Home, Enterprise, or LTSC)
    Privileges: Administrator access is required to modify registry keys and system services.
 
     
 
-🙏 Credits & Attributions 
+🙏 **Credits & Attributions** 
 
 QuickWin is an automation wrapper script. All rights to the individual applications, utilities, and external scripts invoked by this tool belong to their respective authors and creators. 
 
 External Tools Integrated: 
 
-   UniGetUI  by marticliment - Used for package management compatibility on LTSC systems.
-   Chris Titus Utility  by Chris Titus - Leveraged for advanced Windows system utilities.     
+  - [UniGetUI](https://github.com/marticliment/UniGetUI)  by marticliment - Used for package management compatibility on LTSC systems.
+  - [Chris Titus Utility](https://christitus.com/win)  by Chris Titus - Leveraged for advanced Windows system utilities.     
 
 Software Distributed via Winget: 
 
-  - 7-Zip  by Igor Pavlov
-  - Notepad++  by Don Ho
-  - VLC media player  by the VideoLAN organization
-  - qView  by jurplel
-  - Brave Browser  by Brave Software, Inc.
+  - [7-Zip](https://www.7-zip.org/)  by Igor Pavlov
+  - [Notepad++](https://notepad-plus-plus.org/)  by Don Ho
+  - [VLC media](https://www.videolan.org/) player  by the VideoLAN organization
+  - [qView](https://github.com/jurplel/qView)  by jurplel
+  - [Brave Browser](https://brave.com/)  by Brave Software, Inc.
      
 
-Disclaimer: This script is provided as-is for educational and automation purposes. We do not host, redistribute, or claim ownership of any external software or scripts mentioned above. 
+**Disclaimer:** This script is provided as-is for educational and automation purposes. We do not host, redistribute, or claim ownership of any external software or scripts mentioned above. 
           
 
 <i>Made with ❤️ for a cleaner Windows experience.</i>
