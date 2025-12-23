@@ -11,11 +11,11 @@ A powerful, open-source automation toolkit designed to debloat, optimize, and se
 
 Run the following command in PowerShell (Administrator):
 
-irm https://M-d3bug.github.io/QuickWin/install.ps1 | iex
 
  
 
-    Note: Ensure you are running PowerShell as Administrator for the script to execute correctly. 
+    irm https://M-d3bug.github.io/QuickWin/install.ps1 | iex
+
      
 
 🚀 Why QuickWin? 
