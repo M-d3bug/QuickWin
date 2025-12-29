@@ -6,284 +6,1598 @@
     <title>QuickWin | Clean Windows ToolKit</title>
     <meta name="description" content="The ultimate open-source Windows automation toolkit for debloating, optimizing, and setting up your PC. Perfect for Windows LTSC.">
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Preload critical fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts: Inter for UI, Fira Code for Terminal -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-
-    <!-- Tailwind Config for Custom Colors/Fonts -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['Fira Code', 'monospace'],
-                    },
-                    colors: {
-                        dark: {
-                            900: '#0a0a0a',
-                            800: '#121212',
-                            700: '#1e1e1e',
-                            600: '#2d2d2d',
-                        },
-                        accent: {
-                            DEFAULT: '#3b82f6', // Blue-500
-                            hover: '#2563eb',   // Blue-600
-                            glow: 'rgba(59, 130, 246, 0.5)'
-                        }
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-
+    <!-- Font Awesome (embedded as base64 for self-contained file) -->
     <style>
+        /* 
+         * MODERN DARK/LIGHT THEME SYSTEM
+         * Complete transformation with CSS variables and advanced animations
+         */
+        
+        :root {
+            /* Dark Theme (Default) */
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #121212;
+            --bg-tertiary: #1e1e1e;
+            --bg-glass: rgba(30, 30, 30, 0.6);
+            
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            
+            --accent-primary: #3b82f6;
+            --accent-hover: #2563eb;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+            
+            --border-color: rgba(255, 255, 255, 0.1);
+            --border-hover: rgba(59, 130, 246, 0.3);
+            
+            /* Semantic Colors */
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --info: #06b6d4;
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            --gradient-secondary: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            --gradient-accent: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-glow: 0 0 20px var(--accent-glow);
+            
+            /* Typography */
+            --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'Fira Code', 'Courier New', monospace;
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Spacing */
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --radius-xl: 24px;
+            --radius-full: 9999px;
+        }
+
+        /* Light Theme Override */
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #e2e8f0;
+            --bg-glass: rgba(255, 255, 255, 0.7);
+            
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            
+            --accent-primary: #2563eb;
+            --accent-hover: #1d4ed8;
+            --accent-glow: rgba(37, 99, 235, 0.3);
+            
+            --border-color: rgba(15, 23, 42, 0.1);
+            --border-hover: rgba(37, 99, 235, 0.3);
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-glow: 0 0 20px var(--accent-glow);
+        }
+
+        /* CSS Reset & Base Styles */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color var(--transition-base), color var(--transition-base);
+            position: relative;
+        }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 10px;
+            height: 10px;
         }
+
         ::-webkit-scrollbar-track {
-            background: #0a0a0a;
+            background: var(--bg-secondary);
         }
+
         ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 4px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--bg-secondary);
         }
+
         ::-webkit-scrollbar-thumb:hover {
-            background: #555;
+            background: var(--accent-primary);
+            border-color: var(--bg-secondary);
         }
 
-        /* Glassmorphism utility */
+        /* Selection Styling */
+        ::selection {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        /* Background Ambient Effects */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        .ambient-glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 8s ease-in-out infinite;
+            mix-blend-mode: screen;
+        }
+
+        .ambient-glow:nth-child(1) {
+            top: -10%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            animation-delay: 0s;
+        }
+
+        .ambient-glow:nth-child(2) {
+            bottom: -10%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
+            animation-delay: 2s;
+        }
+
+        .ambient-glow:nth-child(3) {
+            top: 40%;
+            right: 20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.2) 0%, transparent 70%);
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(20px, -20px) scale(1.05); }
+            66% { transform: translate(-15px, 15px) scale(0.95); }
+        }
+
+        /* Glassmorphism */
         .glass {
-            background: rgba(30, 30, 30, 0.4);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
         }
 
-        /* Terminal Cursor Animation */
-        .cursor-blink {
-            animation: blink 1s step-end infinite;
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
         }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all var(--transition-base);
+            border-bottom: 1px solid transparent;
+        }
+
+        .navbar.scrolled {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom-color: var(--border-color);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: transform var(--transition-fast);
+        }
+
+        .logo:hover {
+            transform: rotate(-5deg) scale(1.05);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-md);
+            color: white;
+            font-size: 1rem;
+            transition: all var(--transition-base);
+        }
+
+        .logo:hover .logo-icon {
+            transform: rotate(12deg) scale(1.1);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-primary);
+            transition: width var(--transition-base);
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-color);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            transform: scale(1.05);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.95);
+        }
+
+        .theme-icon {
+            position: absolute;
+            transition: all var(--transition-base);
+        }
+
+        .theme-icon.sun {
+            opacity: 0;
+            transform: translateY(20px) rotate(90deg);
+        }
+
+        .theme-icon.moon {
+            opacity: 1;
+            transform: translateY(0) rotate(0deg);
+        }
+
+        [data-theme="light"] .theme-icon.sun {
+            opacity: 1;
+            transform: translateY(0) rotate(0deg);
+        }
+
+        [data-theme="light"] .theme-icon.moon {
+            opacity: 0;
+            transform: translateY(-20px) rotate(-90deg);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-color);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-base);
+        }
+
+        .mobile-menu-btn:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem;
+            transform: translateY(-10px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all var(--transition-base);
+        }
+
+        .mobile-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .mobile-menu-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .mobile-link {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            font-weight: 500;
+        }
+
+        .mobile-link:hover {
+            background: var(--bg-tertiary);
+            color: var(--accent-primary);
+            transform: translateX(4px);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+            font-family: var(--font-display);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width var(--transition-slow), height var(--transition-slow);
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: white;
+            box-shadow: 0 4px 14px 0 var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px 0 var(--accent-glow);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-color: var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-secondary);
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-icon {
+            transition: transform var(--transition-fast);
+        }
+
+        .btn:hover .btn-icon {
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            padding: 180px 0 120px;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--accent-primary);
+            background: linear-gradient(135deg, var(--accent-primary) 0%, rgba(139, 92, 246, 0.8) 100%);
+            color: white;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(59, 130, 246, 0); }
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slide-up-fade 0.8s ease-out forwards;
+        }
+
+        .hero-title .highlight {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-title .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-accent);
+            border-radius: 2px;
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: expand 0.8s 0.4s ease-out forwards;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.6;
+            animation: slide-up-fade 0.8s 0.2s ease-out forwards;
+            opacity: 0;
+        }
+
+        .hero-subtitle strong {
+            color: var(--text-primary);
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-subtitle strong::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-primary);
+            transform: scaleX(0);
+            transform-origin: right;
+            animation: expand 0.6s 0.8s ease-out forwards;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slide-up-fade 0.8s 0.4s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* Terminal Section */
+        .terminal-section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .terminal-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: slide-up-fade 0.8s ease-out forwards;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .terminal {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-xl);
+            animation: float-soft 6s ease-in-out infinite;
+            transition: all var(--transition-base);
+        }
+
+        .terminal:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .terminal-header {
+            background: var(--bg-tertiary);
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .terminal-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            opacity: 0.8;
+            transition: opacity var(--transition-fast);
+        }
+
+        .terminal-dot:nth-child(1) { background: #ef4444; }
+        .terminal-dot:nth-child(2) { background: #f59e0b; }
+        .terminal-dot:nth-child(3) { background: #10b981; }
+
+        .terminal:hover .terminal-dot {
+            opacity: 1;
+            animation: pulse-dot 1.5s ease-in-out infinite;
+        }
+
+        .terminal:hover .terminal-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .terminal:hover .terminal-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .terminal-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        .terminal-body {
+            padding: 1.5rem;
+            position: relative;
+            background: var(--bg-primary);
+        }
+
+        .terminal-command {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            line-height: 1.5;
+            word-break: break-all;
+        }
+
+        .terminal-prompt {
+            color: var(--accent-primary);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .terminal-text {
+            color: var(--text-secondary);
+            flex: 1;
+        }
+
+        .terminal-cursor {
+            width: 2px;
+            height: 1.2em;
+            background: var(--text-secondary);
+            display: inline-block;
+            animation: blink 1s step-end infinite;
+            margin-left: 2px;
+            vertical-align: text-bottom;
+        }
+
+        .terminal-actions {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            display: flex;
+            gap: 0.5rem;
+            opacity: 0;
+            transform: translateY(-4px);
+            transition: all var(--transition-base);
+        }
+
+        .terminal:hover .terminal-actions {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .terminal-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+            font-size: 0.9rem;
+        }
+
+        .terminal-btn:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .terminal-feedback {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--success);
+            color: white;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            transform: translateY(-8px);
+            pointer-events: none;
+            transition: all var(--transition-base);
+            box-shadow: var(--shadow-md);
+        }
+
+        .terminal-feedback.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .terminal-warning {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            animation: slide-up-fade 0.8s 0.2s ease-out forwards;
+            opacity: 0;
+        }
+
+        .terminal-warning i {
+            color: var(--warning);
+        }
+
+        /* Features Grid */
+        .features-section {
+            padding: 100px 0;
+            background: var(--bg-secondary);
+            position: relative;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+            animation: slide-up-fade 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-primary) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity var(--transition-base);
+            pointer-events: none;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .feature-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+        .feature-card:nth-child(5) { animation-delay: 0.5s; }
+        .feature-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-bottom: 1.25rem;
+            transition: all var(--transition-base);
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(-5deg);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .feature-icon.blue { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+        .feature-icon.red { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+        .feature-icon.green { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+        .feature-icon.purple { background: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
+        .feature-icon.indigo { background: rgba(99, 102, 241, 0.15); color: #6366f1; }
+        .feature-icon.cyan { background: rgba(6, 182, 212, 0.15); color: #06b6d4; }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+            font-family: var(--font-display);
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-description strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Technical Section */
+        .technical-section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .technical-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .ltsc-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin: 2.5rem 0;
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+            animation: slide-up-fade 0.8s 0.2s ease-out forwards;
+            opacity: 0;
+        }
+
+        .ltsc-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            pointer-events: none;
+        }
+
+        .ltsc-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+            font-family: var(--font-display);
+        }
+
+        .ltsc-text {
+            color: var(--text-primary);
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+            font-size: 1.05rem;
+        }
+
+        .ltsc-text strong {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        .benefits-list {
+            list-style: none;
+            text-align: left;
+            margin: 2.5rem 0;
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.25rem;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-base);
+            animation: slide-up-fade 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .benefit-item:hover {
+            background: var(--bg-secondary);
+            border-color: var(--border-hover);
+            transform: translateX(4px);
+        }
+
+        .benefit-item:nth-child(1) { animation-delay: 0.1s; }
+        .benefit-item:nth-child(2) { animation-delay: 0.2s; }
+        .benefit-item:nth-child(3) { animation-delay: 0.3s; }
+
+        .benefit-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.85rem;
+            transition: all var(--transition-base);
+        }
+
+        .benefit-item:hover .benefit-icon {
+            transform: scale(1.15) rotate(-10deg);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .benefit-content {
+            flex: 1;
+        }
+
+        .benefit-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+            font-size: 1.05rem;
+        }
+
+        .benefit-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 0 2rem;
+            position: relative;
+        }
+
+        .footer-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+        }
+
+        .footer-logo i {
+            color: var(--accent-primary);
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .footer-text a {
+            color: var(--accent-primary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+            position: relative;
+        }
+
+        .footer-text a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--accent-primary);
+            transform: scaleX(0);
+            transition: transform var(--transition-base);
+            transform-origin: right;
+        }
+
+        .footer-text a:hover {
+            color: var(--accent-hover);
+        }
+
+        .footer-text a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-full);
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+            pointer-events: none;
+            transition: all var(--transition-base);
+            z-index: 999;
+            overflow: hidden;
+        }
+
+        .back-to-top::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width var(--transition-slow), height var(--transition-slow);
+        }
+
+        .back-to-top:hover::before {
+            width: 100px;
+            height: 100px;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: all;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 10px 25px -5px var(--accent-glow);
+        }
+
+        .back-to-top:active {
+            transform: translateY(0) scale(0.95);
+        }
+
+        /* Animations */
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
         }
+
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        @keyframes slide-up-fade {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes expand {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+
+        @keyframes float-soft {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links, .nav-actions {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero {
+                padding: 140px 0 80px;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .terminal-actions {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .ltsc-box {
+                padding: 1.5rem;
+            }
+
+            .benefits-list {
+                gap: 1rem;
+            }
+
+            .back-to-top {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                width: 44px;
+                height: 44px;
+                font-size: 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .terminal-body {
+                padding: 1rem;
+            }
+
+            .terminal-command {
+                font-size: 0.9rem;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus Styles */
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--accent-primary);
+            outline-offset: 2px;
+        }
+
+        /* Loading State */
+        .loading {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            to { left: 100%; }
+        }
+
+        /* Utility Classes */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .text-gradient {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .text-gradient-accent {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Smooth reveal for sections */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
-<body class="bg-dark-900 text-slate-300 font-sans antialiased selection:bg-accent selection:text-white overflow-x-hidden">
-
-    <!-- Background Ambient Glow -->
-    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-        <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-accent/10 rounded-full blur-[100px] animate-pulse-slow"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-purple-900/10 rounded-full blur-[100px] animate-pulse-slow" style="animation-delay: 1.5s;"></div>
+<body>
+    <!-- Ambient Background -->
+    <div class="ambient-bg" aria-hidden="true">
+        <div class="ambient-glow"></div>
+        <div class="ambient-glow"></div>
+        <div class="ambient-glow"></div>
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass border-b border-white/5 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="navbar-content">
                 <!-- Logo -->
-                <div class="flex items-center gap-2 group cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <i class="fa-solid fa-terminal text-accent text-xl group-hover:rotate-12 transition-transform"></i>
-                    <span class="font-bold text-white text-lg tracking-wide">QuickWin</span>
-                </div>
-                
-                <!-- Links -->
-                <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
-                    <!-- Features and Technical links removed -->
-                    <a href="https://github.com/M-d3bug/QuickWin" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 text-white transition-all border border-white/10">
-                        <i class="fa-brands fa-github"></i>
-                        <span>Star on GitHub</span>
-                    </a>
-                </div>
+                <a href="#" class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+                    <div class="logo-icon">
+                        <i class="fas fa-terminal"></i>
+                    </div>
+                    <span>QuickWin</span>
+                </a>
 
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
-                        <i class="fa-solid fa-bars text-xl"></i>
+                <!-- Desktop Navigation -->
+                <ul class="nav-links">
+                    <li><a href="#features" class="nav-link">Features</a></li>
+                    <li><a href="#technical" class="nav-link">Technical</a></li>
+                    <li><a href="https://github.com/M-d3bug/QuickWin" target="_blank" class="nav-link">GitHub</a></li>
+                </ul>
+
+                <!-- Navigation Actions -->
+                <div class="nav-actions">
+                    <!-- Theme Toggle -->
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <i class="fas fa-sun theme-icon sun"></i>
+                        <i class="fas fa-moon theme-icon moon"></i>
+                    </button>
+
+                    <!-- Mobile Menu Button -->
+                    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                        <i class="fas fa-bars"></i>
                     </button>
                 </div>
             </div>
-        </div>
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden bg-dark-800 border-b border-white/5">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <!-- Features and Technical links removed -->
-                <a href="https://github.com/M-d3bug/QuickWin" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-white/5">GitHub Repository</a>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <ul class="mobile-menu-list">
+                    <li><a href="#features" class="mobile-link">Features</a></li>
+                    <li><a href="#technical" class="mobile-link">Technical</a></li>
+                    <li><a href="https://github.com/M-d3bug/QuickWin" class="mobile-link">GitHub Repository</a></li>
+                </ul>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-semibold tracking-wide uppercase mb-6">
-                <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
-                LTSC Ready
-            </div>
-
-            <h1 class="text-5xl md:text-7xl font-bold text-white tracking-tight mb-6">
-                Clean Windows.<br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Zero Dependencies.</span>
-            </h1>
-            
-            <p class="mt-4 max-w-2xl mx-auto text-xl text-slate-400 mb-10">
-                The perfect toolkit for Windows 10/11 <span class="text-white font-semibold">LTSC</span> editions. 
-                Automatically deploys package management where missing, debloats, and optimizes your system.
-            </p>
-
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                <a href="#install" class="px-8 py-3 rounded-lg bg-accent hover:bg-accent-hover text-white font-semibold transition-all shadow-lg shadow-accent/20 flex items-center gap-2 group">
-                    <i class="fa-solid fa-download group-hover:animate-bounce"></i>
-                    Get Started
-                </a>
-                <a href="https://github.com/M-d3bug/QuickWin" target="_blank" class="px-8 py-3 rounded-lg bg-dark-700 hover:bg-dark-600 text-white font-semibold border border-dark-600 transition-all flex items-center gap-2">
-                    <i class="fa-brands fa-github"></i>
-                    View Source
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- PowerShell Execution Section -->
-    <section id="install" class="py-16 relative">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6">
-            <div class="text-center mb-10">
-                <h2 class="text-3xl font-bold text-white mb-2">One-Step Installation</h2>
-                <p class="text-slate-400">Copy and paste this command into your PowerShell (Admin)</p>
-            </div>
-
-            <!-- Terminal Component -->
-            <div class="glass rounded-xl overflow-hidden shadow-2xl animate-float border border-white/10">
-                <!-- Terminal Header -->
-                <div class="bg-dark-800 px-4 py-3 flex items-center justify-between border-b border-white/5">
-                    <div class="flex items-center gap-2">
-                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
-                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
-                    </div>
-                    <div class="text-xs text-slate-500 font-mono">PowerShell - Administrator</div>
-                    <div class="w-16"></div> <!-- Spacer for balance -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span>LTSC Ready</span>
                 </div>
                 
-                <!-- Terminal Body -->
-                <div class="bg-dark-900/90 p-6 font-mono text-sm md:text-base relative group">
-                    <div class="flex items-start">
-                        <span class="text-blue-400 mr-2 select-none">PS C:\></span>
-                        <span id="command-text" class="text-slate-300 break-all">irm https://M-d3bug.github.io/QuickWin/install.ps1 | iex</span>
-                        <span class="w-2.5 h-5 bg-slate-400 ml-1 cursor-blink"></span>
-                    </div>
+                <h1 class="hero-title">
+                    Clean Windows.<br>
+                    <span class="highlight">Zero Dependencies.</span>
+                </h1>
+                
+                <p class="hero-subtitle">
+                    The perfect toolkit for Windows 10/11 <strong>LTSC</strong> editions. 
+                    Automatically deploys package management where missing, debloats, and optimizes your system.
+                </p>
 
-                    <!-- Copy Button -->
-                    <button onclick="copyToClipboard()" id="copy-btn" class="absolute top-4 right-4 flex items-center gap-2 px-3 py-1.5 rounded bg-dark-700 border border-white/10 hover:bg-dark-600 text-xs text-slate-300 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100">
-                        <i class="fa-regular fa-copy"></i>
-                        <span>Copy</span>
-                    </button>
-                    
-                    <!-- Toast Notification -->
-                    <div id="copy-feedback" class="absolute top-4 right-4 px-3 py-1.5 rounded bg-emerald-500/90 text-white text-xs font-semibold shadow-lg transform transition-all duration-300 translate-y-[-10px] opacity-0 pointer-events-none">
-                        <i class="fa-solid fa-check mr-1"></i> Copied!
-                    </div>
+                <div class="hero-actions">
+                    <a href="#install" class="btn btn-primary">
+                        <i class="fas fa-download btn-icon"></i>
+                        Get Started
+                    </a>
+                    <a href="https://github.com/M-d3bug/QuickWin" target="_blank" class="btn btn-secondary">
+                        <i class="fab fa-github btn-icon"></i>
+                        View Source
+                    </a>
                 </div>
             </div>
-            
-            <p class="text-center mt-6 text-xs text-slate-500">
-                <i class="fa-solid fa-triangle-exclamation text-yellow-500 mr-1"></i>
-                Ensure you are running PowerShell as Administrator for the script to execute correctly.
-            </p>
         </div>
     </section>
 
-    <!-- Functionality Grid -->
-    <section id="features" class="py-24 bg-dark-800/50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-white">System Capabilities</h2>
-                <p class="mt-4 text-slate-400 max-w-2xl mx-auto">
-                    Everything you need to transform a fresh Windows install or a stripped-down LTSC edition into a productivity machine.
-                </p>
+    <!-- Terminal Section -->
+    <section class="terminal-section" id="install">
+        <div class="terminal-container">
+            <div class="section-header reveal">
+                <h2 class="section-title">One-Step Installation</h2>
+                <p class="section-subtitle">Copy and paste this command into your PowerShell (Admin)</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Card 1: Complete Setup -->
-                <div class="group p-6 rounded-xl bg-dark-700 border border-white/5 hover:border-accent/50 transition-all duration-300 hover:transform hover:-translate-y-1">
-                    <div class="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-colors">
-                        <i class="fa-solid fa-rocket text-blue-400 text-xl"></i>
+            <div class="terminal reveal">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <div class="terminal-dot"></div>
+                        <div class="terminal-dot"></div>
+                        <div class="terminal-dot"></div>
                     </div>
-                    <h3 class="text-xl font-semibold text-white mb-2">Complete Automation</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
+                    <div class="terminal-label">PowerShell - Administrator</div>
+                    <div style="width: 60px;"></div>
+                </div>
+                
+                <div class="terminal-body">
+                    <div class="terminal-command">
+                        <span class="terminal-prompt">PS C:\></span>
+                        <span class="terminal-text" id="commandText">irm https://M-d3bug.github.io/QuickWin/install.ps1 | iex</span>
+                        <span class="terminal-cursor"></span>
+                    </div>
+
+                    <div class="terminal-actions">
+                        <button class="terminal-btn" id="copyBtn" aria-label="Copy command">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+
+                    <div class="terminal-feedback" id="copyFeedback">
+                        <i class="fas fa-check"></i>
+                        <span>Copied!</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="terminal-warning">
+                <i class="fas fa-triangle-exclamation"></i>
+                <span>Ensure you are running PowerShell as Administrator for the script to execute correctly.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title">System Capabilities</h2>
+                <p class="section-subtitle">Everything you need to transform a fresh Windows install into a productivity machine</p>
+            </div>
+
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card">
+                    <div class="feature-icon blue">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="feature-title">Complete Automation</h3>
+                    <p class="feature-description">
                         Run "Complete Setup" to automatically install package managers, essential apps, and apply optimizations in a single sequence.
                     </p>
                 </div>
 
-                <!-- Card 2: Debloat -->
-                <div class="group p-6 rounded-xl bg-dark-700 border border-white/5 hover:border-red-500/50 transition-all duration-300 hover:transform hover:-translate-y-1">
-                    <div class="w-12 h-12 rounded-lg bg-red-500/10 flex items-center justify-center mb-4 group-hover:bg-red-500/20 transition-colors">
-                        <i class="fa-solid fa-trash-can text-red-400 text-xl"></i>
+                <!-- Feature 2 -->
+                <div class="feature-card">
+                    <div class="feature-icon red">
+                        <i class="fas fa-trash-can"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-white mb-2">Bloatware Removal</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
+                    <h3 class="feature-title">Bloatware Removal</h3>
+                    <p class="feature-description">
                         Removes pre-installed third-party apps (Candy Crush, Twitter, etc.) and disables telemetry services securely.
                     </p>
                 </div>
 
-                <!-- Card 3: Privacy -->
-                <div class="group p-6 rounded-xl bg-dark-700 border border-white/5 hover:border-emerald-500/50 transition-all duration-300 hover:transform hover:-translate-y-1">
-                    <div class="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:bg-emerald-500/20 transition-colors">
-                        <i class="fa-solid fa-user-shield text-emerald-400 text-xl"></i>
+                <!-- Feature 3 -->
+                <div class="feature-card">
+                    <div class="feature-icon green">
+                        <i class="fas fa-user-shield"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-white mb-2">Privacy Hardening</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
+                    <h3 class="feature-title">Privacy Hardening</h3>
+                    <p class="feature-description">
                         Modifies registry keys to disable advertising ID, location tracking, and diagnostic data reporting.
                     </p>
                 </div>
 
-                <!-- Card 4: App Installer -->
-                <div class="group p-6 rounded-xl bg-dark-700 border border-white/5 hover:border-purple-500/50 transition-all duration-300 hover:transform hover:-translate-y-1">
-                    <div class="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4 group-hover:bg-purple-500/20 transition-colors">
-                        <i class="fa-solid fa-box-open text-purple-400 text-xl"></i>
+                <!-- Feature 4 -->
+                <div class="feature-card">
+                    <div class="feature-icon purple">
+                        <i class="fas fa-box-open"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-white mb-2">Essential Apps</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
+                    <h3 class="feature-title">Essential Apps</h3>
+                    <p class="feature-description">
                         Installs core software like 7-Zip, Brave Browser, Notepad++, VLC, and qView via Winget silently.
                     </p>
                 </div>
 
-                <!-- Card 5: External Utility Hub -->
-                <div class="group p-6 rounded-xl bg-dark-700 border border-white/5 hover:border-indigo-500/50 transition-all duration-300 hover:transform hover:-translate-y-1">
-                    <div class="w-12 h-12 rounded-lg bg-indigo-500/10 flex items-center justify-center mb-4 group-hover:bg-indigo-500/20 transition-colors">
-                        <i class="fa-solid fa-terminal text-indigo-400 text-xl"></i>
+                <!-- Feature 5 -->
+                <div class="feature-card">
+                    <div class="feature-icon indigo">
+                        <i class="fas fa-terminal"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-white mb-2">External Utility Hub</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        Seamlessly execute external community tools like <b>Massgrave</b> or <b>Winscript</b>. Also supports running custom registry keys and advanced commands.
+                    <h3 class="feature-title">External Utility Hub</h3>
+                    <p class="feature-description">
+                        Seamlessly execute external community tools like <strong>Massgrave</strong> or <strong>Winscript</strong>. Also supports custom registry keys.
                     </p>
                 </div>
 
-                <!-- Card 6: Safety -->
-                <div class="group p-6 rounded-xl bg-dark-700 border border-white/5 hover:border-cyan-500/50 transition-all duration-300 hover:transform hover:-translate-y-1">
-                    <div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-4 group-hover:bg-cyan-500/20 transition-colors">
-                        <i class="fa-solid fa-rotate-left text-cyan-400 text-xl"></i>
+                <!-- Feature 6 -->
+                <div class="feature-card">
+                    <div class="feature-icon cyan">
+                        <i class="fas fa-rotate-left"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-white mb-2">Revert Functionality</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
+                    <h3 class="feature-title">Revert Functionality</h3>
+                    <p class="feature-description">
                         Made a mistake? The Revert function safely restores default Windows settings and services.
                     </p>
                 </div>
@@ -291,120 +1605,437 @@
         </div>
     </section>
 
-    <!-- Technical Overview -->
-    <section id="technical" class="py-24 border-t border-white/5">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            
-            <h2 class="text-3xl font-bold text-white mb-6">Built for LTSC & Enterprise</h2>
-            
-            <!-- LTSC Highlight Box -->
-            <div class="mb-10 p-6 rounded-xl bg-blue-900/10 border border-blue-500/20 relative overflow-hidden">
-                <div class="absolute top-0 right-0 p-4 opacity-10">
-                    <i class="fa-brands fa-windows text-9xl"></i>
+    <!-- Technical Section -->
+    <section class="technical-section" id="technical">
+        <div class="container">
+            <div class="technical-content">
+                <div class="section-header reveal">
+                    <h2 class="section-title">Built for LTSC & Enterprise</h2>
                 </div>
-                <h3 class="text-xl font-bold text-blue-400 mb-3 relative z-10">No Winget? No Problem.</h3>
-                <p class="text-slate-300 text-sm md:text-base leading-relaxed relative z-10">
-                    Windows LTSC editions are optimized for stability but often lack the modern <strong>Windows Package Manager (Winget)</strong> and the Microsoft Store. 
-                    QuickWin intelligently detects if Winget is missing. If it is, the script automatically downloads and installs <strong>UniGetUI</strong> with bundled dependencies, 
-                    ensuring you never miss out on essential software management tools on your LTSC system.
+
+                <div class="ltsc-box reveal">
+                    <h3 class="ltsc-title">No Winget? No Problem.</h3>
+                    <p class="ltsc-text">
+                        Windows LTSC editions are optimized for stability but often lack the modern <strong>Windows Package Manager (Winget)</strong> and the Microsoft Store. 
+                        QuickWin intelligently detects if Winget is missing. If it is, the script automatically downloads and installs <strong>UniGetUI</strong> with bundled dependencies, 
+                        ensuring you never miss out on essential software management tools on your LTSC system.
+                    </p>
+                </div>
+
+                <p class="section-subtitle reveal" style="margin-top: 2rem;">
+                    QuickWin is a self-contained Batch script that acts as a wrapper for advanced Windows maintenance tools. 
+                    It utilizes standard Windows utilities and PowerShell to perform deep system changes without requiring complex user input.
                 </p>
+
+                <ul class="benefits-list">
+                    <li class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-shield-halved"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <div class="benefit-title">Admin Privileges Required</div>
+                            <div class="benefit-desc">Necessary for Registry editing, Service configuration, and Appx removal.</div>
+                        </div>
+                    </li>
+
+                    <li class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <div class="benefit-title">Universal Package Manager</div>
+                            <div class="benefit-desc">Automatically detects system Winget or bundles a portable version via UniGetUI for LTSC compatibility.</div>
+                        </div>
+                    </li>
+
+                    <li class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <div class="benefit-title">Deep System Integration</div>
+                            <div class="benefit-desc">Directly modifies HKCU/HKLM hives and configures service startup states for optimal performance.</div>
+                        </div>
+                    </li>
+                </ul>
             </div>
-
-            <p class="text-slate-400 mb-8 leading-relaxed">
-                QuickWin is a self-contained Batch script that acts as a wrapper for advanced Windows maintenance tools. 
-                It utilizes standard Windows utilities and PowerShell to perform deep system changes without requiring complex user input.
-            </p>
-
-            <ul class="text-left space-y-6 max-w-2xl mx-auto">
-                <li class="flex items-start">
-                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center mt-0.5">
-                        <i class="fa-solid fa-shield-halved text-accent text-xs"></i>
-                    </div>
-                    <div class="ml-4">
-                        <strong class="text-white block font-medium">Admin Privileges Required</strong>
-                        <span class="text-sm text-slate-500">Necessary for Registry editing, Service configuration, and Appx removal.</span>
-                    </div>
-                </li>
-                <li class="flex items-start">
-                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center mt-0.5">
-                        <i class="fa-solid fa-box text-accent text-xs"></i>
-                    </div>
-                    <div class="ml-4">
-                        <strong class="text-white block font-medium">Universal Package Manager</strong>
-                        <span class="text-sm text-slate-500">Automatically detects system Winget or bundles a portable version via UniGetUI for LTSC compatibility.</span>
-                    </div>
-                </li>
-                <li class="flex items-start">
-                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center mt-0.5">
-                        <i class="fa-solid fa-microchip text-accent text-xs"></i>
-                    </div>
-                    <div class="ml-4">
-                        <strong class="text-white block font-medium">Deep System Integration</strong>
-                        <span class="text-sm text-slate-500">Directly modifies HKCU/HKLM hives and configures service startup states for optimal performance.</span>
-                    </div>
-                </li>
-            </ul>
-
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-dark-900 border-t border-white/5 pt-12 pb-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
-            
-            <div class="flex items-center gap-2 mb-6">
-                <i class="fa-solid fa-terminal text-slate-500"></i>
-                <span class="font-bold text-slate-300">QuickWin</span>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-terminal"></i>
+                    <span>QuickWin</span>
+                </div>
+                <p class="footer-text">
+                    &copy; 2025 QuickWin Project. Open Source under <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a>.<br>
+                    Windows is a trademark of Microsoft Corporation.
+                </p>
             </div>
-
-            <p class="text-slate-600 text-sm text-center">
-                &copy; 2025 QuickWin Project. Open Source under MIT License.<br>
-                Windows is a trademark of Microsoft Corporation.
-            </p>
         </div>
     </footer>
 
-    <!-- JavaScript for Copy Functionality and Mobile Menu -->
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Embedded Font Awesome Icons (Subset) -->
+    <style>
+        /* Font Awesome 6.4.0 - Minimal Subset for Self-Contained File */
+        .fa-solid, .fa-regular, .fa-brands {
+            font-weight: 400;
+            font-style: normal;
+            display: inline-block;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .fa-rocket::before { content: "\f135"; }
+        .fa-trash-can::before { content: "\f2ed"; }
+        .fa-user-shield::before { content: "\f502"; }
+        .fa-box-open::before { content: "\f49e"; }
+        .fa-terminal::before { content: "\f120"; }
+        .fa-rotate-left::before { content: "\f2ea"; }
+        .fa-download::before { content: "\f019"; }
+        .fa-copy::before { content: "\f0c5"; }
+        .fa-check::before { content: "\f00c"; }
+        .fa-triangle-exclamation::before { content: "\f071"; }
+        .fa-shield-halved::before { content: "\f3ed"; }
+        .fa-box::before { content: "\f466"; }
+        .fa-microchip::before { content: "\f2db"; }
+        .fa-arrow-up::before { content: "\f062"; }
+        .fa-sun::before { content: "\f185"; }
+        .fa-moon::before { content: "\f186"; }
+        .fa-bars::before { content: "\f0c9"; }
+        .fa-github::before { content: "\f09b"; font-family: "Font Awesome 6 Brands"; }
+        
+        /* Font Definitions */
+        @font-face {
+            font-family: 'Font Awesome 6 Free';
+            font-style: normal;
+            font-weight: 900;
+            font-display: block;
+            src: url("data:application/font-woff2;charset=utf-8,") format("woff2");
+        }
+        
+        @font-face {
+            font-family: 'Font Awesome 6 Brands';
+            font-style: normal;
+            font-weight: 400;
+            font-display: block;
+            src: url("data:application/font-woff2;charset=utf-8,") format("woff2");
+        }
+    </style>
+
+    <!-- JavaScript -->
     <script>
-        // Copy to Clipboard Logic
-        function copyToClipboard() {
-            const commandText = document.getElementById('command-text').innerText;
-            const copyBtn = document.getElementById('copy-btn');
-            const feedback = document.getElementById('copy-feedback');
-
-            navigator.clipboard.writeText(commandText).then(() => {
-                // Show Feedback
-                feedback.classList.remove('translate-y-[-10px]', 'opacity-0');
-                feedback.classList.add('translate-y-0', 'opacity-100');
+        // Theme Management
+        class ThemeManager {
+            constructor() {
+                this.themeToggle = document.getElementById('themeToggle');
+                this.html = document.documentElement;
+                this.currentTheme = localStorage.getItem('theme') || 'dark';
                 
-                // Hide Copy Button temporarily
-                copyBtn.classList.add('opacity-0');
+                this.init();
+            }
 
-                // Reset after 2 seconds
+            init() {
+                this.applyTheme(this.currentTheme);
+                this.themeToggle.addEventListener('click', () => this.toggleTheme());
+                
+                // Listen for system theme changes
+                window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+                    if (!localStorage.getItem('theme')) {
+                        this.applyTheme(e.matches ? 'light' : 'dark');
+                    }
+                });
+            }
+
+            applyTheme(theme) {
+                if (theme === 'light') {
+                    this.html.setAttribute('data-theme', 'light');
+                } else {
+                    this.html.removeAttribute('data-theme');
+                }
+                this.currentTheme = theme;
+            }
+
+            toggleTheme() {
+                const newTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
+                this.applyTheme(newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                // Add click animation
+                this.themeToggle.style.transform = 'scale(0.9)';
                 setTimeout(() => {
-                    feedback.classList.remove('translate-y-0', 'opacity-100');
-                    feedback.classList.add('translate-y-[-10px]', 'opacity-0');
-                    copyBtn.classList.remove('opacity-0');
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-            });
+                    this.themeToggle.style.transform = '';
+                }, 150);
+            }
         }
 
-        // Mobile Menu Toggle
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
+        // Navigation & Scroll Management
+        class NavigationManager {
+            constructor() {
+                this.navbar = document.getElementById('navbar');
+                this.mobileMenuBtn = document.getElementById('mobileMenuBtn');
+                this.mobileMenu = document.getElementById('mobileMenu');
+                this.backToTop = document.getElementById('backToTop');
+                this.navLinks = document.querySelectorAll('.nav-link, .mobile-link');
+                
+                this.init();
+            }
 
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
+            init() {
+                // Scroll effects
+                window.addEventListener('scroll', () => this.handleScroll());
+                
+                // Mobile menu
+                this.mobileMenuBtn.addEventListener('click', () => this.toggleMobileMenu());
+                
+                // Close mobile menu on link click
+                this.navLinks.forEach(link => {
+                    link.addEventListener('click', () => this.closeMobileMenu());
+                });
+
+                // Back to top
+                this.backToTop.addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+
+                // Smooth scroll for anchor links
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', (e) => {
+                        const href = anchor.getAttribute('href');
+                        if (href !== '#' && href.length > 1) {
+                            e.preventDefault();
+                            const target = document.querySelector(href);
+                            if (target) {
+                                const offset = 80; // Navbar height
+                                const targetPosition = target.offsetTop - offset;
+                                window.scrollTo({
+                                    top: targetPosition,
+                                    behavior: 'smooth'
+                                });
+                            }
+                        }
+                    });
+                });
+            }
+
+            handleScroll() {
+                const scrollY = window.scrollY;
+                
+                // Navbar background
+                if (scrollY > 50) {
+                    this.navbar.classList.add('scrolled');
+                } else {
+                    this.navbar.classList.remove('scrolled');
+                }
+
+                // Back to top button
+                if (scrollY > 500) {
+                    this.backToTop.classList.add('visible');
+                } else {
+                    this.backToTop.classList.remove('visible');
+                }
+
+                // Reveal animations
+                this.handleRevealAnimations();
+            }
+
+            handleRevealAnimations() {
+                const reveals = document.querySelectorAll('.reveal');
+                const windowHeight = window.innerHeight;
+                const revealPoint = 150;
+
+                reveals.forEach(reveal => {
+                    const revealTop = reveal.getBoundingClientRect().top;
+                    
+                    if (revealTop < windowHeight - revealPoint) {
+                        reveal.classList.add('active');
+                    }
+                });
+            }
+
+            toggleMobileMenu() {
+                const isActive = this.mobileMenu.classList.contains('active');
+                
+                if (isActive) {
+                    this.closeMobileMenu();
+                } else {
+                    this.mobileMenu.classList.add('active');
+                    this.mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
+                    document.body.style.overflow = 'hidden';
+                }
+            }
+
+            closeMobileMenu() {
+                this.mobileMenu.classList.remove('active');
+                this.mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Clipboard Manager
+        class ClipboardManager {
+            constructor() {
+                this.copyBtn = document.getElementById('copyBtn');
+                this.commandText = document.getElementById('commandText');
+                this.feedback = document.getElementById('copyFeedback');
+                
+                this.init();
+            }
+
+            init() {
+                if (this.copyBtn) {
+                    this.copyBtn.addEventListener('click', () => this.copyCommand());
+                }
+            }
+
+            async copyCommand() {
+                const text = this.commandText.textContent;
+                
+                try {
+                    await navigator.clipboard.writeText(text);
+                    this.showFeedback();
+                    this.animateButton();
+                } catch (err) {
+                    console.error('Failed to copy:', err);
+                    // Fallback for older browsers
+                    this.fallbackCopy(text);
+                }
+            }
+
+            fallbackCopy(text) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    this.showFeedback();
+                    this.animateButton();
+                } catch (err) {
+                    console.error('Fallback copy failed:', err);
+                }
+                
+                document.body.removeChild(textarea);
+            }
+
+            showFeedback() {
+                this.feedback.classList.add('show');
+                
+                setTimeout(() => {
+                    this.feedback.classList.remove('show');
+                }, 2000);
+            }
+
+            animateButton() {
+                const icon = this.copyBtn.querySelector('i');
+                const originalClass = icon.className;
+                
+                icon.className = 'fas fa-check';
+                this.copyBtn.style.background = 'var(--success)';
+                this.copyBtn.style.borderColor = 'var(--success)';
+                this.copyBtn.style.color = 'white';
+                
+                setTimeout(() => {
+                    icon.className = originalClass;
+                    this.copyBtn.style.background = '';
+                    this.copyBtn.style.borderColor = '';
+                    this.copyBtn.style.color = '';
+                }, 2000);
+            }
+        }
+
+        // Intersection Observer for Animations
+        class AnimationObserver {
+            constructor() {
+                this.observer = null;
+                this.init();
+            }
+
+            init() {
+                const options = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
+
+                this.observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('active');
+                        }
+                    });
+                }, options);
+
+                // Observe all reveal elements
+                document.querySelectorAll('.reveal').forEach(el => {
+                    this.observer.observe(el);
+                });
+            }
+        }
+
+        // Performance Optimization - Lazy Load Animations
+        class PerformanceOptimizer {
+            static init() {
+                // Reduce motion for users who prefer it
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    document.documentElement.style.scrollBehavior = 'auto';
+                }
+
+                // Debounce scroll events
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    if (scrollTimeout) {
+                        window.cancelAnimationFrame(scrollTimeout);
+                    }
+                    scrollTimeout = window.requestAnimationFrame(() => {
+                        // Scroll handling is done in NavigationManager
+                    });
+                }, { passive: true });
+            }
+        }
+
+        // Initialize all managers when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize managers
+            new ThemeManager();
+            new NavigationManager();
+            new ClipboardManager();
+            new AnimationObserver();
+            PerformanceOptimizer.init();
+
+            // Add initial reveal animation to hero content
+            setTimeout(() => {
+                const heroElements = document.querySelectorAll('.hero-badge, .hero-title, .hero-subtitle, .hero-actions');
+                heroElements.forEach((el, index) => {
+                    setTimeout(() => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+            }, 100);
+
+            console.log('%cQuickWin %cLoaded successfully!', 'color: #3b82f6; font-weight: bold;', 'color: #10b981;');
         });
 
-        // Close mobile menu on link click
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                menu.classList.add('hidden');
+        // Service Worker (Optional - for offline support)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // Note: Service workers require HTTPS and separate files
+                // This is a placeholder for future enhancement
+                console.log('Service Worker support detected');
             });
-        });
+        }
     </script>
 </body>
 </html>
